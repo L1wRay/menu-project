@@ -4,97 +4,60 @@ import com.menu.model.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Сервисный класс для управления операциями с меню.
- * Предоставляет функциональность для работы с элементами меню, включая фильтрацию и вычисления.
- * 
- * @author Команда проекта Меню
- * @version 1.0
- */
 public class MenuService {
     
-    private final List<MenuItem> элементыМеню;
+    private final List<MenuItem> menuItems;
     
-    /**
-     * Создает новый MenuService с пустым меню.
-     */
     public MenuService() {
-        this.элементыМеню = new ArrayList<>();
+        this.menuItems = new ArrayList<>();
     }
     
-    /**
-     * Добавляет элемент меню в сервис.
-     *
-     * @param элемент элемент меню для добавления
-     * @throws IllegalArgumentException если элемент null
-     */
-    public void добавитьЭлементМеню(MenuItem элемент) {
-        if (элемент == null) {
-            throw new IllegalArgumentException("Элемент меню не может быть null");
+    public void addMenuItem(MenuItem item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Menu item cannot be null");
         }
-        элементыМеню.add(элемент);
+        menuItems.add(item);
     }
     
-    /**
-     * Возвращает все элементы меню.
-     *
-     * @return список всех элементов меню
-     */
-    public List<MenuItem> получитьВсеЭлементыМеню() {
-        return new ArrayList<>(элементыМеню);
+    public List<MenuItem> getAllMenuItems() {
+        return new ArrayList<>(menuItems);
     }
     
-    /**
-     * Возвращает все веганские элементы меню.
-     *
-     * @return список веганских элементов меню
-     */
-    public List<MenuItem> получитьВеганскиеЭлементы() {
-        List<MenuItem> веганскиеЭлементы = new ArrayList<>();
-        for (MenuItem элемент : элементыМеню) {
-            if (элемент.isВеганский()) {
-                веганскиеЭлементы.add(элемент);
+    public List<MenuItem> getVeganItems() {
+        List<MenuItem> veganItems = new ArrayList<>();
+        for (MenuItem item : menuItems) {
+            if (item.isVegan()) {
+                veganItems.add(item);
             }
         }
-        return веганскиеЭлементы;
+        return veganItems;
     }
     
-    /**
-     * Вычисляет среднюю стоимость элементов меню с калорийностью выше указанного значения.
-     *
-     * @param минКалории минимальный порог калорий
-     * @return средняя стоимость высококалорийных элементов, или 0 если нет подходящих элементов
-     */
-    public double получитьСреднююСтоимостьВысококалорийныхЭлементов(int минКалории) {
-        if (минКалории < 0) {
-            throw new IllegalArgumentException("Минимальные калории не могут быть отрицательными");
+    public double getAveragePriceForHighCalorieItems(int minCalories) {
+        if (minCalories < 0) {
+            throw new IllegalArgumentException("Minimum calories cannot be negative");
         }
         
-        List<MenuItem> высококалорийныеЭлементы = new ArrayList<>();
-        for (MenuItem элемент : элементыМеню) {
-            if (элемент.getКалории() > минКалории) {
-                высококалорийныеЭлементы.add(элемент);
+        List<MenuItem> highCalorieItems = new ArrayList<>();
+        for (MenuItem item : menuItems) {
+            if (item.getCalories() > minCalories) {
+                highCalorieItems.add(item);
             }
         }
         
-        if (высококалорийныеЭлементы.isEmpty()) {
+        if (highCalorieItems.isEmpty()) {
             return 0.0;
         }
         
-        double общаяСтоимость = 0.0;
-        for (MenuItem элемент : высококалорийныеЭлементы) {
-            общаяСтоимость += элемент.getСтоимость();
+        double totalPrice = 0.0;
+        for (MenuItem item : highCalorieItems) {
+            totalPrice += item.getPrice();
         }
         
-        return общаяСтоимость / высококалорийныеЭлементы.size();
+        return totalPrice / highCalorieItems.size();
     }
     
-    /**
-     * Возвращает количество элементов меню в сервисе.
-     *
-     * @return количество элементов меню
-     */
-    public int получитьКоличествоЭлементовМеню() {
-        return элементыМеню.size();
+    public int getMenuItemsCount() {
+        return menuItems.size();
     }
 }

@@ -1,80 +1,42 @@
 package com.menu.model;
 
-/**
- * Представляет тост в меню.
- * Наследуется от MenuItem и добавляет специфические свойства тоста: тип хлеба и начинку.
- * 
- * @author Команда проекта Меню
- * @version 1.0
- */
 public class Toast extends MenuItem {
     
-    private final String типХлеба;
-    private final String начинка;
+    private final String breadType;
+    private final String filling;
     
-    /**
-     * Создает новый тост с указанными свойствами.
-     *
-     * @param название название тоста
-     * @param стоимость стоимость тоста
-     * @param калории количество калорий
-     * @param веганский является ли тост веганским
-     * @param типХлеба тип используемого хлеба
-     * @param начинка основная начинка тоста
-     * @throws IllegalArgumentException если типХлеба или начинка null или пустые
-     */
-    public Toast(String название, double стоимость, int калории, boolean веганский,
-                 String типХлеба, String начинка) {
-        super(название, стоимость, калории, веганский);
+    public Toast(String name, double price, int calories, boolean isVegan,
+                 String breadType, String filling) {
+        super(name, price, calories, isVegan);
         
-        if (типХлеба == null || типХлеба.trim().isEmpty()) {
-            throw new IllegalArgumentException("Тип хлеба не может быть null или пустым");
+        if (breadType == null || breadType.trim().isEmpty()) {
+            throw new IllegalArgumentException("Bread type cannot be null or empty");
         }
-        if (начинка == null || начинка.trim().isEmpty()) {
-            throw new IllegalArgumentException("Начинка не может быть null или пустой");
+        if (filling == null || filling.trim().isEmpty()) {
+            throw new IllegalArgumentException("Filling cannot be null or empty");
         }
         
-        this.типХлеба = типХлеба;
-        this.начинка = начинка;
+        this.breadType = breadType;
+        this.filling = filling;
     }
     
-    /**
-     * Возвращает тип хлеба, используемого в тосте.
-     *
-     * @return тип хлеба
-     */
-    public String getТипХлеба() {
-        return типХлеба;
+    public String getBreadType() {
+        return breadType;
     }
     
-    /**
-     * Возвращает начинку тоста.
-     *
-     * @return начинка тоста
-     */
-    public String getНачинка() {
-        return начинка;
+    public String getFilling() {
+        return filling;
     }
     
-    /**
-     * Возвращает конкретный тип элемента меню.
-     *
-     * @return "Тост" как тип элемента
-     */
     @Override
-    public String getТипЭлемента() {
-        return "Тост";
+    public String getItemType() {
+        return "Toast";
     }
     
-    /**
-     * Возвращает подробное строковое представление тоста.
-     *
-     * @return строковое представление с деталями тоста
-     */
     @Override
     public String toString() {
         return String.format("%s [%s хлеб с %s] - %.2f бун, %d ккал%s", 
-            getНазвание(), типХлеба, начинка, getСтоимость(), getКалории(), 
-            isВеганский() ? " (Веганский)" : "");
+            getName(), breadType, filling, getPrice(), getCalories(), 
+            isVegan() ? " (Веганский)" : "");
     }
 }

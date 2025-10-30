@@ -1,80 +1,42 @@
 package com.menu.model;
 
-/**
- * Представляет напиток в меню.
- * Наследуется от MenuItem и добавляет специфические свойства напитка: тип и размер.
- * 
- * @author Команда проекта Меню
- * @version 1.0
- */
 public class Drink extends MenuItem {
     
-    private final String тип;
-    private final String размер;
+    private final String type;
+    private final String size;
     
-    /**
-     * Создает новый напиток с указанными свойствами.
-     *
-     * @param название название напитка
-     * @param стоимость стоимость напитка
-     * @param калории количество калорий
-     * @param веганский является ли напиток веганским
-     * @param тип тип напитка (например, Кофе, Сок, Газировка)
-     * @param размер размер напитка (например, Маленький, Средний, Большой)
-     * @throws IllegalArgumentException если тип или размер null или пустые
-     */
-    public Drink(String название, double стоимость, int калории, boolean веганский, 
-                 String тип, String размер) {
-        super(название, стоимость, калории, веганский);
+    public Drink(String name, double price, int calories, boolean isVegan, 
+                 String type, String size) {
+        super(name, price, calories, isVegan);
         
-        if (тип == null || тип.trim().isEmpty()) {
-            throw new IllegalArgumentException("Тип напитка не может быть null или пустым");
+        if (type == null || type.trim().isEmpty()) {
+            throw new IllegalArgumentException("Drink type cannot be null or empty");
         }
-        if (размер == null || размер.trim().isEmpty()) {
-            throw new IllegalArgumentException("Размер напитка не может быть null или пустым");
+        if (size == null || size.trim().isEmpty()) {
+            throw new IllegalArgumentException("Drink size cannot be null or empty");
         }
         
-        this.тип = тип;
-        this.размер = размер;
+        this.type = type;
+        this.size = size;
     }
     
-    /**
-     * Возвращает тип напитка.
-     *
-     * @return тип напитка
-     */
-    public String getТип() {
-        return тип;
+    public String getType() {
+        return type;
     }
     
-    /**
-     * Возвращает размер напитка.
-     *
-     * @return размер напитка
-     */
-    public String getРазмер() {
-        return размер;
+    public String getSize() {
+        return size;
     }
     
-    /**
-     * Возвращает конкретный тип элемента меню.
-     *
-     * @return "Напиток" как тип элемента
-     */
     @Override
-    public String getТипЭлемента() {
-        return "Напиток";
+    public String getItemType() {
+        return "Drink";
     }
     
-    /**
-     * Возвращает подробное строковое представление напитка.
-     *
-     * @return строковое представление с деталями напитка
-     */
     @Override
     public String toString() {
         return String.format("%s [%s, %s] - %.2f бун, %d ккал%s", 
-            getНазвание(), тип, размер, getСтоимость(), getКалории(), 
-            isВеганский() ? " (Веганский)" : "");
+            getName(), type, size, getPrice(), getCalories(), 
+            isVegan() ? " (Веганский)" : "");
     }
 }

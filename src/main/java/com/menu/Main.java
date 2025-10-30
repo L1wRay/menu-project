@@ -6,111 +6,66 @@ import com.menu.model.Toast;
 import com.menu.service.MenuService;
 import java.util.List;
 
-/**
- * Главный класс приложения для демонстрации работы системы меню.
- * Создает элементы меню, выполняет операции и отображает результаты.
- * 
- * @author Команда проекта Меню
- * @version 1.0
- */
-/**
- * Лабораторная работа 3
- * Выполнил: Денчик
- * Группа: ИТП-21
- * Дата: 30.10.2025
- */
- public final class Main {
+public final class Main {
     
-    /**
-     * Приватный конструктор для предотвращения создания экземпляров.
-     */
     private Main() {
-        // Служебный класс - не создавать экземпляры
     }
     
-    /**
-     * Главный метод, который запускает демонстрационное приложение.
-     *
-     * @param args аргументы командной строки (не используются)
-     */
     public static void main(String[] args) {
-        // Создаем сервис меню
-        MenuService сервисМеню = new MenuService();
+        MenuService menuService = new MenuService();
         
-        // Создаем и добавляем напитки (цены в бунах)
-        сервисМеню.добавитьЭлементМеню(new Drink("Эспрессо", 4.0, 5, true, "Кофе", "Маленький"));
-        сервисМеню.добавитьЭлементМеню(new Drink("Капучино", 7.0, 120, false, "Кофе", "Средний"));
-        сервисМеню.добавитьЭлементМеню(new Drink("Зеленый чай", 6.0, 0, true, "Чай", "Средний"));
-        сервисМеню.добавитьЭлементМеню(new Drink("Апельсиновый сок", 8.0, 110, true, "Сок", "Большой"));
-        сервисМеню.добавитьЭлементМеню(new Drink("Соевый латте", 5.0, 90, true, "Кофе", "Средний"));
-        сервисМеню.добавитьЭлементМеню(new Drink("Миндальный смузи", 10.0, 180, true, "Смузи", "Большой"));
+        menuService.addMenuItem(new Drink("Эспрессо", 4.0, 5, true, "Кофе", "Маленький"));
+        menuService.addMenuItem(new Drink("Капучино", 7.0, 120, false, "Кофе", "Средний"));
+        menuService.addMenuItem(new Drink("Зеленый чай", 6.0, 0, true, "Чай", "Средний"));
+        menuService.addMenuItem(new Drink("Апельсиновый сок", 8.0, 110, true, "Сок", "Большой"));
+        menuService.addMenuItem(new Drink("Соевый латте", 5.0, 90, true, "Кофе", "Средний"));
+        menuService.addMenuItem(new Drink("Миндальный смузи", 10.0, 180, true, "Смузи", "Большой"));
         
-        // Создаем и добавляем тосты (цены в бунах)
-        сервисМеню.добавитьЭлементМеню(new Toast("Авокадо тост", 2.0, 320, true, "Цельнозерновой", "Авокадо"));
-        сервисМеню.добавитьЭлементМеню(new Toast("Сырный тост", 7.0, 280, false, "Белый", "Сыр"));
-        сервисМеню.добавитьЭлементМеню(new Toast("Веганский клуб", 3.0, 420, true, "Мультизерновой", "Тофу и овощи"));
-        сервисМеню.добавитьЭлементМеню(new Toast("Томат-Базилик", 6.0, 190, true, "На закваске", "Томаты и базилик"));
-        сервисМеню.добавитьЭлементМеню(new Toast("Ветчина-Сыр", 13.0, 350, false, "Ржаной", "Ветчина и сыр"));
-        сервисМеню.добавитьЭлементМеню(new Toast("Грибной", 15.0, 290, true, "Цельнозерновой", "Грибы"));
+        menuService.addMenuItem(new Toast("Авокадо тост", 2.0, 320, true, "Цельнозерновой", "Авокадо"));
+        menuService.addMenuItem(new Toast("Сырный тост", 7.0, 280, false, "Белый", "Сыр"));
+        menuService.addMenuItem(new Toast("Веганский клуб", 3.0, 420, true, "Мультизерновой", "Тофу и овощи"));
+        menuService.addMenuItem(new Toast("Томат-Базилик", 6.0, 190, true, "На закваске", "Томаты и базилик"));
+        menuService.addMenuItem(new Toast("Ветчина-Сыр", 13.0, 350, false, "Ржаной", "Ветчина и сыр"));
+        menuService.addMenuItem(new Toast("Грибной", 15.0, 290, true, "Цельнозерновой", "Грибы"));
         
-        // Отображаем все элементы меню
-        отобразитьВсеМеню(сервисМеню);
-        
-        // Отображаем веганские элементы
-        отобразитьВеганскиеЭлементы(сервисМеню);
-        
-        // Вычисляем и отображаем среднюю стоимость для высококалорийных элементов
-        отобразитьСреднююСтоимостьВысококалорийных(сервисМеню);
+        displayAllMenu(menuService);
+        displayVeganItems(menuService);
+        displayAveragePriceForHighCalorie(menuService);
     }
     
-    /**
-     * Отображает все элементы меню в системе.
-     *
-     * @param сервисМеню сервис меню, содержащий элементы
-     */
-    private static void отобразитьВсеМеню(MenuService сервисМеню) {
+    private static void displayAllMenu(MenuService menuService) {
         System.out.println("=== ПОЛНОЕ МЕНЮ ===");
-        System.out.println("Всего элементов: " + сервисМеню.получитьКоличествоЭлементовМеню());
+        System.out.println("Всего элементов: " + menuService.getMenuItemsCount());
         System.out.println();
         
-        List<MenuItem> всеЭлементы = сервисМеню.получитьВсеЭлементыМеню();
-        for (int i = 0; i < всеЭлементы.size(); i++) {
-            System.out.println((i + 1) + ". " + всеЭлементы.get(i));
+        List<MenuItem> allItems = menuService.getAllMenuItems();
+        for (int i = 0; i < allItems.size(); i++) {
+            System.out.println((i + 1) + ". " + allItems.get(i));
         }
         System.out.println();
     }
     
-    /**
-     * Отображает все веганские элементы меню.
-     *
-     * @param сервисМеню сервис меню, содержащий элементы
-     */
-    private static void отобразитьВеганскиеЭлементы(MenuService сервисМеню) {
+    private static void displayVeganItems(MenuService menuService) {
         System.out.println("=== ВЕГАНСКИЕ ЭЛЕМЕНТЫ ===");
         
-        List<MenuItem> веганскиеЭлементы = сервисМеню.получитьВеганскиеЭлементы();
-        if (веганскиеЭлементы.isEmpty()) {
+        List<MenuItem> veganItems = menuService.getVeganItems();
+        if (veganItems.isEmpty()) {
             System.out.println("Веганские элементы отсутствуют.");
         } else {
-            System.out.println("Найдено " + веганскиеЭлементы.size() + " веганских элементов:");
-            for (int i = 0; i < веганскиеЭлементы.size(); i++) {
-                System.out.println((i + 1) + ". " + веганскиеЭлементы.get(i));
+            System.out.println("Найдено " + veganItems.size() + " веганских элементов:");
+            for (int i = 0; i < veganItems.size(); i++) {
+                System.out.println((i + 1) + ". " + veganItems.get(i));
             }
         }
         System.out.println();
     }
     
-    /**
-     * Отображает среднюю стоимость для элементов с калорийностью более 300.
-     *
-     * @param сервисМеню сервис меню для вычислений
-     */
-    private static void отобразитьСреднююСтоимостьВысококалорийных(MenuService сервисМеню) {
-        final int порогКалорий = 300;
-        double средняяСтоимость = сервисМеню.получитьСреднююСтоимостьВысококалорийныхЭлементов(порогКалорий);
+    private static void displayAveragePriceForHighCalorie(MenuService menuService) {
+        final int calorieThreshold = 300;
+        double averagePrice = menuService.getAveragePriceForHighCalorieItems(calorieThreshold);
         
         System.out.println("=== СРЕДНЯЯ СТОИМОСТЬ ВЫСОКОКАЛОРИЙНЫХ ЭЛЕМЕНТОВ ===");
         System.out.printf("Средняя стоимость элементов с более чем %d калориями: %.2f бун%n", 
-                         порогКалорий, средняяСтоимость);
+                         calorieThreshold, averagePrice);
     }
 }

@@ -1,98 +1,50 @@
 package com.menu.model;
 
-/**
- * Абстрактный базовый класс, представляющий элемент меню.
- * Этот класс служит основой для всех элементов меню
- * и определяет общие свойства: название, стоимость, калорийность и веганский статус.
- * 
- * @author Команда проекта Меню
- * @version 1.0
- */
 public abstract class MenuItem {
     
-    private final String название;
-    private final double стоимость;
-    private final int калории;
-    private final boolean веганский;
+    private final String name;
+    private final double price;
+    private final int calories;
+    private final boolean isVegan;
     
-    /**
-     * Создает новый элемент меню с указанными свойствами.
-     *
-     * @param название название элемента меню
-     * @param стоимость стоимость элемента меню
-     * @param калории количество калорий элемента меню
-     * @param веганский является ли элемент меню веганским
-     * @throws IllegalArgumentException если название null или пустое, или стоимость/калории отрицательные
-     */
-    public MenuItem(String название, double стоимость, int калории, boolean веганский) {
-        if (название == null || название.trim().isEmpty()) {
-            throw new IllegalArgumentException("Название не может быть null или пустым");
+    public MenuItem(String name, double price, int calories, boolean isVegan) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or empty");
         }
-        if (стоимость < 0) {
-            throw new IllegalArgumentException("Стоимость не может быть отрицательной");
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
         }
-        if (калории < 0) {
-            throw new IllegalArgumentException("Калории не могут быть отрицательными");
+        if (calories < 0) {
+            throw new IllegalArgumentException("Calories cannot be negative");
         }
         
-        this.название = название;
-        this.стоимость = стоимость;
-        this.калории = калории;
-        this.веганский = веганский;
+        this.name = name;
+        this.price = price;
+        this.calories = calories;
+        this.isVegan = isVegan;
     }
     
-    /**
-     * Возвращает название элемента меню.
-     *
-     * @return название элемента меню
-     */
-    public String getНазвание() {
-        return название;
+    public String getName() {
+        return name;
     }
     
-    /**
-     * Возвращает стоимость элемента меню.
-     *
-     * @return стоимость элемента меню
-     */
-    public double getСтоимость() {
-        return стоимость;
+    public double getPrice() {
+        return price;
     }
     
-    /**
-     * Возвращает количество калорий элемента меню.
-     *
-     * @return количество калорий
-     */
-    public int getКалории() {
-        return калории;
+    public int getCalories() {
+        return calories;
     }
     
-    /**
-     * Проверяет, является ли элемент меню веганским.
-     *
-     * @return true если элемент веганский, false в противном случае
-     */
-    public boolean isВеганский() {
-        return веганский;
+    public boolean isVegan() {
+        return isVegan;
     }
     
-    /**
-     * Возвращает строковое представление элемента меню.
-     *
-     * @return строковое представление, содержащее название, стоимость, калории и веганский статус
-     */
     @Override
     public String toString() {
         return String.format("%s - %.2f бун, %d ккал%s", 
-            название, стоимость, калории, веганский ? " (Веганский)" : "");
+            name, price, calories, isVegan ? " (Веганский)" : "");
     }
     
-    /**
-     * Абстрактный метод для получения конкретного типа элемента меню.
-     * Должен быть реализован подклассами.
-     *
-     * @return тип элемента меню
-     */
-    public abstract String getТипЭлемента();
+    public abstract String getItemType();
 }
