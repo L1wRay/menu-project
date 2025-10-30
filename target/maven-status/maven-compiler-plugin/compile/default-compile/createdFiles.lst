@@ -1,0 +1,5 @@
+com\menu\model\Drink.class
+com\menu\service\MenuService.class
+com\menu\model\Toast.class
+com\menu\Main.class
+com\menu\model\MenuItem.class
