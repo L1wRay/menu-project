@@ -1,5 +1,6 @@
 package com.menu;
 
+import com.menu.gui.MainFrame;
 import com.menu.model.Drink;
 import com.menu.model.MenuItem;
 import com.menu.model.Toast;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 /**
  * Отрефакторенный главный класс с расширенной функциональностью
  * Демонстрирует CRUD операции и новые возможности
+ * РЕФАКТОРИНГ: Добавлена поддержка графического интерфейса
  */
 public final class Main {
     
@@ -20,8 +22,45 @@ public final class Main {
     }
     
     public static void main(String[] args) {
+        // РЕФАКТОРИНГ: Проверка аргументов для выбора режима работы
+        if (args.length > 0 && args[0].equals("--gui")) {
+            runGuiVersion();
+        } else {
+            runConsoleVersion();
+        }
+    }
+    
+    /**
+     * РЕФАКТОРИНГ: Запуск графической версии приложения
+     */
+    private static void runGuiVersion() {
+        System.out.println("Запуск графического интерфейса Menu Management System...");
+        try {
+            // Запуск главного окна Swing в Event Dispatch Thread
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    MainFrame frame = new MainFrame();
+                    frame.setVisible(true);
+                    System.out.println("Графический интерфейс успешно запущен");
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Ошибка запуска GUI: " + e.getMessage());
+            System.out.println("Запускаем консольную версию...");
+            runConsoleVersion();
+        }
+    }
+    
+    /**
+     * Консольная версия приложения (ваша существующая логика)
+     */
+    private static void runConsoleVersion() {
         MenuService menuService = new MenuService();
         initializeSampleData(menuService);
+        
+        System.out.println("=== ЗАПУЩЕНА КОНСОЛЬНАЯ ВЕРСИЯ ===");
+        System.out.println("Для запуска графического интерфейса используйте: --gui");
+        System.out.println();
         
         // РЕФАКТОРИНГ: Добавлено интерактивное меню
         showMainMenu(menuService);
@@ -59,7 +98,8 @@ public final class Main {
             System.out.println("3. Средняя цена высококалорийных блюд");
             System.out.println("4. Найти блюдо по названию");
             System.out.println("5. Удалить блюдо");
-            System.out.println("6. Выход");
+            System.out.println("6. Переключиться на графический интерфейс");
+            System.out.println("7. Выход");
             System.out.print("Выберите опцию: ");
             
             String choice = scanner.nextLine();
@@ -81,6 +121,10 @@ public final class Main {
                     removeMenuItem(menuService);
                     break;
                 case "6":
+                    System.out.println("Переключение на графический интерфейс...");
+                    runGuiVersion();
+                    return;
+                case "7":
                     System.out.println("Выход из программы...");
                     return;
                 default:
